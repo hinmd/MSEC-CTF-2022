@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /*	
+	Table Responsive
+	===================
+	Author: https://github.com/pablorgarcia
+ */
+
+    @charset "UTF-8";
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 300;
+        line-height: 1.42em;
+        color: #A7A1AE;
+        background-color: #1F2739;
+    }
+
+    h1 {
+        font-size: 3em;
+        font-weight: 300;
+        line-height: 1em;
+        text-align: center;
+        color: #4DC3FA;
+    }
+
+    h2 {
+        font-size: 1em;
+        font-weight: 300;
+        text-align: center;
+        display: block;
+        line-height: 1em;
+        padding-bottom: 2em;
+        color: #FB667A;
+    }
+
+    h2 a {
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #FB667A;
+        text-decoration: none;
+    }
+
+    .blue {
+        color: #185875;
+    }
+
+    .yellow {
+        color: #FFF842;
+    }
+
+    .container th h1 {
+        font-weight: bold;
+        font-size: 1em;
+        text-align: left;
+        color: #185875;
+    }
+
+    .container td {
+        font-weight: normal;
+        font-size: 1em;
+        -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+        -moz-box-shadow: 0 2px 2px -2px #0E1119;
+        box-shadow: 0 2px 2px -2px #0E1119;
+    }
+
+    .container {
+        text-align: left;
+        overflow: hidden;
+        width: 80%;
+        margin: 0 auto;
+        display: table;
+        padding: 0 0 8em 0;
+    }
+
+    .container td,
+    .container th {
+        padding-bottom: 2%;
+        padding-top: 2%;
+        padding-left: 2%;
+    }
+
+    /* Background-color of the odd rows */
+    .container tr:nth-child(odd) {
+        background-color: #323C50;
+    }
+
+    /* Background-color of the even rows */
+    .container tr:nth-child(even) {
+        background-color: #2C3446;
+    }
+
+    .container th {
+        background-color: #1F2739;
+    }
+
+    .container td:first-child {
+        color: #FB667A;
+    }
+
+    .container tr:hover {
+        background-color: #464A52;
+        -webkit-box-shadow: 0 6px 6px -6px #0E1119;
+        -moz-box-shadow: 0 6px 6px -6px #0E1119;
+        box-shadow: 0 6px 6px -6px #0E1119;
+    }
+
+    .container td:hover {
+        background-color: #FFF842;
+        color: #403E10;
+        font-weight: bold;
+
+        box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+        transform: translate3d(6px, -6px, 0);
+
+        transition-delay: 0s;
+        transition-duration: 0.4s;
+        transition-property: all;
+        transition-timing-function: line;
+    }
+
+    @media (max-width: 800px) {
+
+        .container td:nth-child(4),
+        .container th:nth-child(4) {
+            display: none;
+        }
+    }
+</style>
+<h1><span class="blue">&lt;</span>{{fileNameInRar}}<span class="blue">&gt;</span></h1>
+<h2><span class="yellow">SHA256: {{hashFile}}</span></h2>
+{% if result.permalink %}
+<h2>See details at <a href="{{result.permalink}}" target="_blank">HERE</a></h2>
+{% else %}
+<h2>Try testing on <a href="https://www.virustotal.com/gui/home/search" target="_blank">Virus Total</a></h2>
+{% endif %}
+
+<table class="container">
+    <thead>
+        <tr>
+            <th>
+                <h1>By</h1>
+            </th>
+            <th>
+                <h1>Detected</h1>
+            </th>
+            <th>
+                <h1>Result</h1>
+            </th>
+            <th>
+                <h1>Version</h1>
+            </th>
+        </tr>
+    </thead>
+    {% if result.scans%}
+    <tbody>
+        <tr>
+            <td>Bkav</td>
+            <td>{{result.scans.Bkav.detected}}</td>
+            <td>{{result.scans.Bkav.result}}</td>
+            <td>{{result.scans.Bkav.version}}</td>
+        </tr>
+        <tr>
+            <td>CMC</td>
+            <td>{{result.scans.CMC.detected}}</td>
+            <td>{{result.scans.CMC.result}}</td>
+            <td>{{result.scans.CMC.version}}</td>
+        </tr>
+        <tr>
+            <td>Baidu</td>
+            <td>{{result.scans.Baidu.detected}}</td>
+            <td>{{result.scans.Baidu.result}}</td>
+            <td>{{result.scans.Baidu.version}}</td>
+        </tr>
+        <tr>
+            <td>Microsoft</td>
+            <td>{{result.scans.Microsoft.detected}}</td>
+            <td>{{result.scans.Microsoft.result}}</td>
+            <td>{{result.scans.Microsoft.version}}</td>
+        </tr>
+        <tr>
+            <td>SUPERAntiSpyware</td>
+            <td>{{result.scans.SUPERAntiSpyware.detected}}</td>
+            <td>{{result.scans.SUPERAntiSpyware.result}}</td>
+            <td>{{result.scans.SUPERAntiSpyware.version}}</td>
+        </tr>
+        <tr>
+            <td>BitDefender</td>
+            <td>{{result.scans.BitDefender.detected}}</td>
+            <td>{{result.scans.BitDefender.result}}</td>
+            <td>{{result.scans.BitDefender.version}}</td>
+        </tr>
+        <tr>
+            <td>Malwarebytes</td>
+            <td>{{result.scans.Malwarebytes.detected}}</td>
+            <td>{{result.scans.Malwarebytes.result}}</td>
+            <td>{{result.scans.Malwarebytes.version}}</td>
+        </tr>
+        <tr>
+            <td>K7AntiVirus</td>
+            <td>{{result.scans.K7AntiVirus.detected}}</td>
+            <td>{{result.scans.K7AntiVirus.result}}</td>
+            <td>{{result.scans.K7AntiVirus.version}}</td>
+        </tr>
+        <tr>
+            <td>Tencent</td>
+            <td>{{result.scans.Tencent.detected}}</td>
+            <td>{{result.scans.Tencent.result}}</td>
+            <td>{{result.scans.Tencent.version}}</td>
+        </tr>
+        <tr>
+            <td>Symantec</td>
+            <td>{{result.scans.Symantec.detected}}</td>
+            <td>{{result.scans.Symantec.result}}</td>
+            <td>{{result.scans.Symantec.version}}</td>
+        </tr>
+        <tr>
+            <td>TrendMicro</td>
+            <td>{{result.scans.TrendMicro.detected}}</td>
+            <td>{{result.scans.TrendMicro.result}}</td>
+            <td>{{result.scans.TrendMicro.version}}</td>
+        </tr>
+    </tbody>
+    {% else %}
+    <h2 style="color:aquamarine">{{result.verbose_msg}}</h2>
+    {% endif %}
+</table>
+{% endblock %}
